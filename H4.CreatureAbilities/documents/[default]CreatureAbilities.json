@@ -1,0 +1,317 @@
+{
+    "Air Elemental": [
+        "Flying",
+        "Elementals",
+        "Insubstantial"
+    ],
+    "Angel": [
+        "Flying",
+        "Resurrection"
+    ],
+    "Ballista": [
+        "Ranged",
+        "Mechanical",
+        "Long Range",
+        "No Obstacle Penalty"
+    ],
+    "Bandit": [
+        "Stealth"
+    ],
+    "Behemoth": [
+        "Ranged",
+        "Flying",
+        "Random Harmful Spells"
+    ],
+    "Beholder": [
+        "Strength"
+    ],
+    "Berserker": [
+        "Strikes Twice",
+        "Berserker"
+    ],
+    "Black Dragon": [
+        "Flying",
+        "Magic Immunity",
+        "Breath Attack"
+    ],
+    "Bone Dragon": [
+        "Flying",
+        "Undead",
+        "Skeletal",
+        "Fear"
+    ],
+    "Catapult": [
+        "Ranged",
+        "Mechanical",
+        "Siege Capable",
+        "Greek Fire"
+    ],
+    "Centaur": [
+        "Ranged",
+        "Normal Melee",
+        "Short Range"
+    ],
+    "Cerberus": [
+        "No Retaliation",
+        "Triple Headed Attack"
+    ],
+    "Champion": [
+        "First Strike",
+        "Charging"
+    ],
+    "Crossbowman": [
+        "Ranged",
+        "Long Range"
+    ],
+    "Crusader": [
+        "Strikes Twice",
+        "Death Ward"
+    ],
+    "Cyclops": [
+        "Ranged",
+        "Area Attack"
+    ],
+    "Dark Champion": [
+        "Charging",
+        "Undead",
+        "Terror",
+        "Regeneration"
+    ],
+    "Devil": [
+        "Teleport",
+        "Summon Demons",
+        "Life Ward"
+    ],
+    "Dragon Golem": [
+        "First Strike",
+        "Negate first Strike",
+        "Mechanical"
+    ],
+    "Dwarf": [
+        "Magic Resistence"
+    ],
+    "Earth Elemental": [
+        "Elementals",
+        "Magic Resistence"
+    ],
+    "Efreet": [
+        "Flying",
+        "Fire Shield",
+        "Fire Attack",
+        "Fire Resistance"
+    ],
+    "Elf": [
+        "Ranged",
+        "Shoots Twice",
+        "Ranged First Strike"
+    ],
+    "Evil Sorceress": [
+        "Teleport",
+        "Spellcaster",
+        "Magic Mirror"
+    ],
+    "Faerie Dragon": [
+        "Flying",
+        "Spellcaster",
+        "Magic Mirror"
+    ],
+    "Fire Elemental": [
+        "Ranged",
+        "Elementals",
+        "Fire Attack",
+        "Fire Resistance"
+    ],
+    "Frenzied Gnasher": [
+        "Magic Immunity",
+        "Berserker"
+    ],
+    "Gargantuan": [
+        "Ranged",
+        "Shoots Twice",
+        "Area Attack",
+        "Normal Melee"
+    ],
+    "Gargoyle": [
+        "Flying",
+        "Elementals",
+        "Stone Skin"
+    ],
+    "Genies": [
+        "Flying",
+        "Spellcaster"
+    ],
+    "Ghost": [
+        "Flying",
+        "Undead",
+        "Aging",
+        "Insubstantial"
+    ],
+    "Goblin Knight": [
+        "Magic Resistence",
+        "Stone Skin",
+        "Negate first Strike"
+    ],
+    "Gold Golem": [
+        "Mechanical",
+        "Magic Resistence"
+    ],
+    "Griffin": [
+        "Flying",
+        "Unlimited Retaliation"
+    ],
+    "Hafling": [
+        "Ranged",
+        "Giant Slayer"
+    ],
+    "Harpy": [
+        "Flying",
+        "No Retaliation",
+        "Strike And Return"
+    ],
+    "Hydra": [
+        "No Retaliation",
+        "Multiple Attack"
+    ],
+    "Ice Demon": [
+        "Freezing Attack",
+        "Cold Attack",
+        "Cold Resistance"
+    ],
+    "Imp": [
+        "Flying",
+        "Mana Leech"
+    ],
+    "Leprecon": [
+        "Fortune"
+    ],
+    "Mage": [
+        "Spellcaster"
+    ],
+    "Mantis": [
+        "Flying",
+        "First Strike",
+        "Binding"
+    ],
+    "Medusa": [
+        "Ranged",
+        "Normal Melee",
+        "Unlimited Shots",
+        "Stone Gaze"
+    ],
+    "Mega Dragon": [
+        "Arc Breath Attack",
+        "Magic Resistence"
+    ],
+    "Mermaid": [
+        "Hypnotize"
+    ],
+    "Minotaur": [
+        "Block"
+    ],
+    "Monk": [
+        "Ranged",
+        "Death Ward"
+    ],
+    "Mummy": [
+        "Undead",
+        "Curse"
+    ],
+    "Naga": [
+        "No Retaliation"
+    ],
+    "Nightmare": [
+        "Terror"
+    ],
+    "Nomad": [
+        "First Strike"
+    ],
+    "Ogre Mage": [
+        "Bloodlust"
+    ],
+    "Orc": [
+        "Ranged",
+        "Normal Melee",
+        "Short Range"
+    ],
+    "Peasant": [
+        "Taxpayer"
+    ],
+    "Phoenix": [
+        "Flying",
+        "Rebirth",
+        "Breath Attack",
+        "Fire Resistance"
+    ],
+    "Pikeman": [
+        "Long Weapon",
+        "Negate first Strike"
+    ],
+    "Pirate": [
+        "Bonuses At Sea"
+    ],
+    "Satyr": [
+        "Mirth"
+    ],
+    "Sea Monster": [
+        "Devouring"
+    ],
+    "Skeleton": [
+        "Undead",
+        "Skeletal"
+    ],
+    "Sprite": [
+        "Flying",
+        "No Retaliation"
+    ],
+    "Squire": [
+        "Stunning"
+    ],
+    "Thunder Bird": [
+        "Flying",
+        "Lighting Attack"
+    ],
+    "Titan": [
+        "Ranged",
+        "Normal Melee",
+        "Chaos Ward"
+    ],
+    "Troglodyte": [
+        "Blind Immunity"
+    ],
+    "Troll": [
+        "Regeneration"
+    ],
+    "Unicorn": [
+        "Blinding"
+    ],
+    "Vampire": [
+        "Undead",
+        "Flying",
+        "No Retaliation",
+        "Life Draining"
+    ],
+    "Venom Spawn": [
+        "Ranged",
+        "Poison"
+    ],
+    "Waspwort": [
+        "Undead",
+        "Tougness"
+    ],
+    "Water Elemental": [
+        "Ranged",
+        "Weakness"
+    ],
+    "White Tiger": [
+        "Elementals",
+        "Spellcaster",
+        "Cold Resistance",
+        "Cold Attack"
+    ],
+    "Wolves": [
+        "First Strike"
+    ],
+    "Zombie": [
+        "Strikes Twice"
+    ]
+}

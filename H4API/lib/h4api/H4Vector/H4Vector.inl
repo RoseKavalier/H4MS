@@ -1,0 +1,443 @@
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+//                     Created by RoseKavalier:                     //
+//                     rosekavalierhc@gmail.com                     //
+//                       Created: 2019-12-18                        //
+//                      Last edit: 2019-12-18                       //
+//        ***You may use or distribute these files freely           //
+//            so long as this notice remains present.***            //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+
+#ifndef _H4VECTOR_INL_
+#define _H4VECTOR_INL_
+
+#include "H4Vector.hpp"
+
+namespace h4
+{
+	template<typename _Elem>
+	inline _Elem * H4Vector<_Elem>::Allocate(UINT number)
+	{
+		return H4ObjectAllocator< _Elem>().allocate(number);
+	}
+	template<typename _Elem>
+	inline VOID H4Vector<_Elem>::Construct(_Elem* start, _Elem* finish)
+	{
+		while (start < finish)
+		{
+			H4ObjectAllocator< _Elem>().construct(start);
+			++start;
+		}
+	}
+	template<typename _Elem>
+	inline VOID H4Vector<_Elem>::Destruct(_Elem * start, _Elem * finish)
+	{
+		while (start < finish)
+		{
+			H4ObjectAllocator< _Elem>().destroy(start);
+			++start;
+		}
+	}
+	template<typename _Elem>
+	inline VOID H4Vector<_Elem>::Deallocate()
+	{
+		H4ObjectAllocator<_Elem>().deallocate(m_first);
+	}
+	template<typename _Elem>
+	inline H4Vector<_Elem>::H4Vector(const int number_elements) :
+		m_first(nullptr),
+		m_end(nullptr),
+		m_capacity(nullptr)
+	{
+		Reserve(number_elements);
+	}
+	template<typename _Elem>
+	inline H4Vector<_Elem>::H4Vector() :
+		m_first(nullptr),
+		m_end(nullptr),
+		m_capacity(nullptr)
+	{
+	}
+	template<typename _Elem>
+	inline H4Vector<_Elem>::~H4Vector()
+	{
+		Deref();
+	}
+	template<typename _Elem>
+	inline _Elem* H4Vector<_Elem>::begin()
+	{
+		return m_first;
+	}
+	template<typename _Elem>
+	inline _Elem* H4Vector<_Elem>::end()
+	{
+		return m_end;
+	}
+	template<typename _Elem>
+	inline VOID H4Vector<_Elem>::Init()
+	{
+		m_first = nullptr;
+		m_end = nullptr;
+		m_capacity = nullptr;
+	}
+	template<typename _Elem>
+	inline VOID H4Vector<_Elem>::Deref()
+	{
+		if (m_first)
+		{
+			Destruct(begin(), end());
+			Deallocate();
+		}
+		m_first = nullptr;
+		m_end = nullptr;
+		m_capacity = nullptr;
+	}
+	template<typename _Elem>
+	inline BOOL H4Vector<_Elem>::IsEmpty() const
+	{
+		if (!m_first || m_first == m_end)
+			return TRUE;
+		return FALSE;
+	}
+	template<typename _Elem>
+	inline BOOL H4Vector<_Elem>::IsFull() const
+	{
+		if (m_end == m_capacity)
+			return TRUE;
+		return FALSE;
+	}
+	template<typename _Elem>
+	inline INT32 H4Vector<_Elem>::Count() const
+	{
+		return m_end - m_first;
+	}
+	template<typename _Elem>
+	inline INT32 H4Vector<_Elem>::CountMax() const
+	{
+		return m_capacity - m_first;
+	}
+	template<typename _Elem>
+	inline UINT32 H4Vector<_Elem>::Size() const
+	{
+		return UINT32(m_end) - UINT32(m_first);
+	}
+	template<typename _Elem>
+	inline UINT32 H4Vector<_Elem>::SizeAllocated() const
+	{
+		return UINT32(m_capacity) - UINT32(m_first);
+	}
+	template<typename _Elem>
+	inline VOID H4Vector<_Elem>::RemoveLast()
+	{
+		Pop();
+	}
+	template<typename _Elem>
+	inline VOID H4Vector<_Elem>::RemoveAll()
+	{
+		for (_Elem* i = begin(); i < end(); ++i)
+			i->~_Elem();
+
+		m_end = m_first;
+	}
+	template<typename _Elem>
+	inline _Elem* H4Vector<_Elem>::Add(_Elem& item)
+	{
+		if (!m_first || IsFull())
+		{
+			if (!Expand())
+				return nullptr; // failed
+		}
+		*m_end = item;
+		++m_end;
+		return m_end - 1;  // returns position where it was added
+	}
+	template<typename _Elem>
+	inline _Elem* H4Vector<_Elem>::AddOne(_Elem& item)
+	{
+		if (!m_first)
+		{
+			if (!Reserve(1))
+				return nullptr;
+		}
+		else if (IsFull())
+		{
+			if (!Reserve(CountMax() + 1))
+				return nullptr;
+		}
+		*m_end = item;
+		++m_end;
+		return m_end - 1;  // returns position where it was added
+	}
+	template<typename _Elem>
+	inline BOOL H4Vector<_Elem>::Expand()
+	{
+		constexpr INT MIN_ELEMENTS = 10;
+		constexpr INT SIZE_MULTIPLIER = 2;
+
+		if (!m_first)
+			return Reserve(MIN_ELEMENTS);
+		return Reserve(CountMax()* SIZE_MULTIPLIER);
+	}
+	template<typename _Elem>
+	inline _Elem* H4Vector<_Elem>::First()
+	{
+		return m_first;
+	}
+	template<typename _Elem>
+	inline const _Elem* H4Vector<_Elem>::CFirst() const
+	{
+		return m_first;
+	}
+	template<typename _Elem>
+	inline _Elem& H4Vector<_Elem>::RFirst()
+	{
+		return *m_first;
+	}
+	template<typename _Elem>
+	inline const _Elem& H4Vector<_Elem>::CRFirst() const
+	{
+		return *m_first;
+	}
+	template<typename _Elem>
+	inline _Elem* H4Vector<_Elem>::Last()
+	{
+		return m_end - 1;
+	}
+	template<typename _Elem>
+	inline const _Elem* H4Vector<_Elem>::CLast() const
+	{
+		return m_end - 1;
+	}
+	template<typename _Elem>
+	inline _Elem& H4Vector<_Elem>::RLast()
+	{
+		return *Last();
+	}
+	template<typename _Elem>
+	inline const _Elem& H4Vector<_Elem>::CRLast() const
+	{
+		return *CLast();
+	}
+	template<typename _Elem>
+	inline _Elem* H4Vector<_Elem>::Append(_Elem& item)
+	{
+		return Add(item);
+	}
+	template<typename _Elem>
+	inline _Elem* H4Vector<_Elem>::Push(_Elem& item)
+	{
+		return Add(item);
+	}
+	template<typename _Elem>
+	inline _Elem* H4Vector<_Elem>::Pop()
+	{
+		if (m_end > m_first)
+		{
+			--m_end;
+			m_end->~_Elem();
+		}
+		return m_end;
+	}
+	template<typename _Elem>
+	inline _Elem* H4Vector<_Elem>::At(INT32 pos)
+	{
+		INT32 n;
+		if (pos >= 0)
+			n = std::min(pos, Count() - 1);
+		else
+		{
+			int c = Count();
+			n = std::min(-(pos), c);
+			n = c - n;
+		}
+		return m_first + n;
+	}
+	template<typename _Elem>
+	inline const _Elem* H4Vector<_Elem>::CAt(INT32 pos) const
+	{
+		INT32 n;
+		if (pos >= 0)
+			n = std::min(pos, Count() - 1);
+		else
+		{
+			int c = Count();
+			n = std::min(-(pos), c);
+			n = c - n;
+		}
+		return m_first + n;
+	}
+	template<typename _Elem>
+	inline _Elem& H4Vector<_Elem>::RAt(INT32 pos)
+	{
+		return *At(pos);
+	}
+	template<typename _Elem>
+	inline const _Elem& H4Vector<_Elem>::CRAt(INT32 pos) const
+	{
+		return RAt(pos);
+	}
+	template<typename _Elem>
+	inline BOOL H4Vector<_Elem>::Remove(INT32 pos)
+	{
+		return Remove(pos, pos);
+	}
+	template<typename _Elem>
+	inline BOOL H4Vector<_Elem>::Remove(INT32 fromPos, INT32 toPos)
+	{
+		if (fromPos < 0 || toPos < 0 || toPos < fromPos)
+			return FALSE;
+		INT num = Count();
+		if (fromPos >= num)
+			return FALSE;
+
+		INT to = std::min(num - 1, toPos);
+		INT r = to - fromPos + 1;
+
+		for (int i = fromPos; i <= toPos; ++i)
+			m_first[i]->~_Elem();
+
+		_Elem* rem = m_first + fromPos;
+		_Elem* remEnd = rem + r;
+		size_t copyLen = size_t(m_end) - size_t(remEnd);
+		//* move any elements from the end
+		memmove(PVOID(rem), PVOID(remEnd), copyLen);
+		//* blank out the moved end elements
+		F_memset(PVOID(remEnd), 0, copyLen);
+		m_end -= r;
+		return TRUE;
+	}
+	template<typename _Elem>
+	inline BOOL H4Vector<_Elem>::Reserve(INT number)
+	{
+		if (number <= 0)
+			return FALSE;
+
+		INT num = Count();
+		if (number <= num)
+			return FALSE;
+
+		_Elem *t = Allocate(number);
+		if (!t)
+			return FALSE;
+
+		Construct(&t[0], &t[number]);
+
+#ifdef _CPLUSPLUS11_
+		for (int i = 0; i < num; ++i)
+			t[i] = std::move(m_first[i]);
+#else
+		for (int i = 0; i < num; ++i)
+			t[i] = m_first[i];
+#endif		
+		Destruct(begin(), end());
+		Deallocate();
+
+		m_first = t;
+		m_end = m_first + num;
+		m_capacity = m_first + number;
+
+		return TRUE;
+	}
+	template<typename _Elem>
+	inline _Elem& H4Vector<_Elem>::operator[](INT32 pos)
+	{
+		return m_first[pos];
+	}
+	template<typename _Elem>
+	inline _Elem& H4Vector<_Elem>::operator[](INT32 pos) const
+	{
+		return m_first[pos];
+	}
+	template<typename _Elem>
+	inline _Elem* H4Vector<_Elem>::operator+=(_Elem& item)
+	{
+		return Add(item);
+	}
+	template<typename _Elem>
+	inline _Elem* H4Vector<_Elem>::operator<<(_Elem& item)
+	{
+		return Add(item);
+	}
+#ifdef _CPLUSPLUS11_
+	template<typename _Elem>
+	inline _Elem * H4Vector<_Elem>::Add(_Elem && item)
+	{
+		if (!m_first || IsFull())
+		{
+			if (!Expand())
+				return nullptr; // failed
+		}
+		*m_end = std::move(item);
+		++m_end;
+		return m_end - 1;  // returns position where it was added
+	}
+	template<typename _Elem>
+	inline _Elem * H4Vector<_Elem>::Push(_Elem && item)
+	{
+		return Add(std::move(item));
+	}
+
+	template<typename _Elem>
+	inline _Elem * H4Vector<_Elem>::AddOne(_Elem && item)
+	{
+		if (!m_first)
+		{
+			if (!Reserve(1))
+				return nullptr;
+		}
+		else if (IsFull())
+		{
+			if (!Reserve(CountMax() + 1))
+				return nullptr;
+		}
+		*m_end = std::move(item);
+		++m_end;
+		return m_end - 1;  // returns position where it was added
+	}
+
+	template<typename _Elem>
+	inline _Elem * H4Vector<_Elem>::Append(_Elem && item)
+	{
+		return Add(std::move(item));
+	}
+
+	template<typename _Elem>
+	inline _Elem * H4Vector<_Elem>::operator+=(_Elem && item)
+	{
+		return Add(std::move(item));
+	}
+
+#endif
+#ifdef _H4_STD_CONVERSIONS_
+	template<typename _Elem>
+	inline H4Vector<_Elem>::H4Vector(const std::vector<_Elem>& vec)
+	{
+		Init();
+		const INT n = vec.size();
+		Reserve(n);
+		for (int i = 0; i < n; ++i)
+			Add(vec[i]);
+	}
+	template<typename _Elem>
+	inline std::vector<_Elem> H4Vector<_Elem>::to_std_vector() const
+	{
+		std::vector<_Elem> vec;
+		for (_Elem* i = begin(); i < end(); ++i)
+			vec.push_back(*i);
+
+		return vec;
+	}
+	template<typename _Elem>
+	inline H4Vector<_Elem>& H4Vector<_Elem>::operator=(const std::vector<_Elem>& vec)
+	{
+		const INT n = vec.size();
+		Reserve(n);
+		for (int i = 0; i < n; ++i)
+			Add(const_cast<_Elem&>(vec[i]));
+		return *this;
+	}
+#endif
+}
+
+#endif /* #define _H4VECTOR_INL_ */

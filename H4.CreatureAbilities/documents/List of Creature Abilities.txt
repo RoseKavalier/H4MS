@@ -1,0 +1,89 @@
+# These are the creature abilities names used in 'CreatureAbilities.json'
+# This is merely a reference list and is not used by H4.CreatureAbilities.
+
+Triple Headed Attack
+Aging
+Area Attack
+Berserker
+Binding
+Blind Immunity
+Blinding
+Block
+Bloodlust
+Breath Attack
+Chaos Ward
+Charging
+Cold Attack
+Cold Resistance
+Curse
+Devouring
+Death Ward
+Elementals
+Extra Melee
+Extra Ranged
+Fire Attack
+Fire Resistance
+Fire Shield
+First Strike
+Negate first Strike
+Flying
+Fortune
+Freezing Attack
+Giant Slayer
+Multiple Attack
+Hypnotize
+Ignore Wards
+Ignore Zones of Control
+Insubstantial
+Life Ward
+Lighting Attack
+Long Range
+Long Weapon
+Magic Immunity
+Magic Mirror
+Magic Resistence
+Mana Leech
+Mechanical
+Melee Giant Slayer
+Mirth
+Negate Mind Immunity
+No Retaliation
+Normal Melee
+Fear
+Poison
+Random Harmful Spells
+Ranged
+Ranged First Strike
+Ranged Giant Slayer
+Ranged Stun
+Rebirth
+Regeneration
+Resurrection
+Bonuses At Sea
+Shoots Twice
+Short Range
+No Obstacle Penalty
+Skeletal
+Spell Vulnerability
+Spellcaster
+Stealth
+Stone Gaze
+Stone Skin
+Strength
+Strike And Return
+Strikes Twice
+Stunning
+Summon Demons
+Taxpayer
+Teleport
+Terror
+Tougness
+Undead
+Unlimited Retaliation
+Unlimited Shots
+Life Draining
+Weakness
+Unused Ability
+Greek Fire
+Arc Breath Attack
+Siege Capable

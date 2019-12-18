@@ -1,0 +1,77 @@
+# These are the creature names used in 'CreatureAbilities.json'
+# This is merely a reference list and is not used by H4.CreatureAbilities.
+
+Air Elemental
+Angel
+Ballista
+Bandit
+Behemoth
+Beholder
+Black Dragon
+Bone Dragon
+Centaur
+Cerberus
+Champion
+Crossbowman
+Crusader
+Cyclops
+Venom Spawn
+Devil
+Dragon Golem
+Dwarf
+Earth Elemental
+Efreet
+Elf
+Faerie Dragon
+Fire Elemental
+Gargoyle
+Genies
+Ghost
+Berserker
+Gold Golem
+Griffin
+Hafling
+Harpy
+Hydra
+Ice Demon
+Imp
+Leprecon
+Mage
+Mantis
+Medusa
+Mermaid
+Minotaur
+Monk
+Mummy
+Naga
+Nightmare
+Nomad
+Ogre Mage
+Orc
+Peasant
+Phoenix
+Pikeman
+Pirate
+Satyr
+Sea Monster
+Skeleton
+Squire
+Sprite
+Thunder Bird
+Titan
+Troglodyte
+Troll
+Unicorn
+Vampire
+Water Elemental
+White Tiger
+Wolves
+Zombie
+Waspwort
+Goblin Knight
+Evil Sorceress
+Gargantuan
+Dark Champion
+Catapult
+Frenzied Gnasher
+Mega Dragon
