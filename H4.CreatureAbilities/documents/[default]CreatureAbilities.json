@@ -18,12 +18,12 @@
         "Stealth"
     ],
     "Behemoth": [
+        "Strength"
+    ],
+    "Beholder": [
         "Ranged",
         "Flying",
         "Random Harmful Spells"
-    ],
-    "Beholder": [
-        "Strength"
     ],
     "Berserker": [
         "Strikes Twice",

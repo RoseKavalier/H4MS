@@ -10,7 +10,6 @@
 #include "H4API.hpp"
 
 using json = nlohmann::json;
-using StringVector = std::vector<std::string>;
 using IntVector = std::vector<int>;
 using namespace h4;
 
@@ -277,8 +276,22 @@ BOOL ReadJson()
 	for (int i = 0; i < CREATURE_NUMBER; ++i)
 	{
 		auto& creature = P_CreatureAbilities(i);
-		creature.id = i;
-		creature.abilities = creatureAbilities[i];
+		switch (NH4Creatures::eCreatures(i))
+		{
+		case NH4Creatures::eCreatures::BEHEMOTH:
+			creature.id = i + 1;
+			creature.abilities = creatureAbilities[i + 1];
+			break;
+		case NH4Creatures::eCreatures::BEHOLDER:
+			creature.id = i - 1;
+			creature.abilities = creatureAbilities[i - 1];
+			break;
+		default:
+			creature.id = i;
+			creature.abilities = creatureAbilities[i];
+			break;
+		}
+
 	}
 
 	return TRUE;
