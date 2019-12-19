@@ -7,7 +7,6 @@
 
 #define _H4_STD_CONVERSIONS_
 #define _H4API_PLUGINS_
-#define _H4API_LIBRARY_
 #include "H4API.hpp"
 
 using json = nlohmann::json;
@@ -15,7 +14,7 @@ using StringVector = std::vector<std::string>;
 using IntVector = std::vector<int>;
 using namespace h4;
 
-constexpr LPCSTR ABILITIES_JSON = ".\\NewCreatureAbilities.json";
+constexpr LPCSTR ABILITIES_JSON = ".\\CreatureAbilities.json";
 constexpr INT CREATURE_NUMBER = 74;
 constexpr INT ABILITIES_NUMBER = 86;
 
