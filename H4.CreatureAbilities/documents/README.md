@@ -22,4 +22,4 @@ It is set up as an array of creatures with a list of the abilities they should b
   * If an unrecognized ability is provided, the plugin will not activate (be mindful of typos).
 * If any irregularities are spotted, you should get a message with some more details.
 
-![JSON details](documents/CreatureAbilities.png)
+![JSON details](https://github.com/RoseKavalier/H4MS/blob/master/H4.CreatureAbilities/documents/CreatureAbilities.png)
