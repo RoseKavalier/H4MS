@@ -91,8 +91,7 @@ bool H4MSPlugin::Load(const std::string & plugin_name)
 		if (!dir.IsModified())
 			throw std::exception(PLUGIN_DIRECTORY_FAILED);
 
-		// config file is not absolutely required but we still log its absence as an error.
-		// However, if it's available we read patches and assets information.
+		// config file is absolutely required!
 		CFile f;
 		if (!f.OpenToRead(PLUGIN_CONFIG, true))
 			throw std::exception(PLUGIN_CONFIG_FAILED);

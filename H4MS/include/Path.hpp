@@ -92,6 +92,6 @@ public:
 	~DirectoryChanger();
 	bool IsModified() const;
 private:
-	WCHAR m_currentDirectory[MAX_PATH];
+	TCHAR m_currentDirectory[MAX_PATH];
 	bool m_success;
 };

@@ -15,7 +15,7 @@ void ShowError(LPCTSTR message, LPCTSTR file, int line)
 #ifdef UNICODE
 TString ansi_to_tstring(const std::string & ansi_string)
 #else
-TString& ansi_to_tstring(const std::string & ansi_string)
+TString ansi_to_tstring(const std::string & ansi_string)
 #endif
 {
 #ifdef UNICODE

@@ -24,12 +24,12 @@ typedef std::string TString;
 
 void ShowError(LPCTSTR message, LPCTSTR file, int line);
 
-#define SHOW_ERROR(message) ::ShowError(message, __FILEW__, __LINE__);
+#define SHOW_ERROR(message) ::ShowError(message, __FILE__, __LINE__);
 
 #ifdef UNICODE
 TString ansi_to_tstring(const std::string& ansi_string);
 #else
-TString& ansi_to_tstring(const std::string& ansi_string);
+TString ansi_to_tstring(const std::string& ansi_string);
 #endif
 TString utf8_to_tstring(const std::string& utf8_string);
 std::string tstring_to_utf8(const TString& tchar_string);
