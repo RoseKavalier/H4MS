@@ -81,9 +81,4 @@
 #include "patcher_x86.hpp"
 #endif
 
-#ifdef _H4API_OPERATORS_
-// * include H4API operators
-#include "H4api/H4_Operators.hpp"
-#endif
-
 #endif /* #define _H4API_HPP_ */

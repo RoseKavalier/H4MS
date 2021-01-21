@@ -17,28 +17,55 @@
 namespace h4
 {
 	template<typename T>
-	inline H4Patcher::WriteValue<T>::WriteValue(const UINT address, const T value)
+	inline BOOL H4Patcher::WriteValue(ADDRESS address, const T value)
 	{
 		H4Protect protect(address, sizeof(T));
-		if (protect.CanWrite())
-			*reinterpret_cast<T*>(address) = value;
+		if (!protect.CanWrite())
+			return FALSE;
+		ValueAt<T>(address) = value;
+		return TRUE;
 	}
 
 	template<typename T, size_t size>
-	inline H4Patcher::WriteValues<T, size>::WriteValues(const UINT address, const T(&value)[size])
+	inline BOOL H4Patcher::WriteValues(const UINT address, const T(&value)[size])
 	{
 		H4Protect protect(address, sizeof(T) * size);
-		if (protect.CanWrite())
-			for (size_t i = 0; i < size; ++i)
-				reinterpret_cast<T*>(address)[i] = value[i];
+		if (!protect.CanWrite())
+			return FALSE;
+		for (size_t i = 0; i < size; ++i)
+			ValueAt<T>(address + i) = value[i];
+		return TRUE;
+	}
+
+	template<typename T>
+	inline BOOL H4Patcher::AddressOfPatch(const UINT address, const T & data)
+	{
+		return DwordPatch(address, AddressOf(data));
+	}
+
+	template<typename Address, typename Type, size_t size>
+	typename inline std::enable_if<std::numeric_limits<Address>::is_integer && sizeof(Address) == 4, BOOL>::type
+		H4Patcher::AddressOfPatch(const Address(&address)[size], const Type& data)
+	{
+		for (size_t i = 0; i < size; ++i)
+			if (!DwordPatch(address[i], AddressOf(data)))
+				return FALSE;
+		return TRUE;
+
+		std::addressof(address);
+	}
+
+	template<typename T>
+	inline BOOL H4Patcher::ObjectPatch(T & reference, T data)
+	{
+		return WriteValue<T>(AddressOf(reference), data);
 	}
 
 	template<size_t size>
-	inline VOID H4Patcher::HexPatch(const UINT address, const BYTE(&value)[size])
+	inline BOOL H4Patcher::HexPatch(const UINT address, const BYTE(&value)[size])
 	{
-		WriteValues<BYTE, size>(address, value);
-	}
-
+		return WriteValues<BYTE, size>(address, value);
+	}	
 }
 
 #endif /* #define _H4MEMORY_INL_ */

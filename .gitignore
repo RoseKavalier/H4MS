@@ -24,3 +24,9 @@ H4MS/Release/H4MS.pch
 H4MS/src/dllmain.cpp
 H4MS/src/H4MS.cpp
 H4MS/src/stdafx.cpp
+*.zip
+*.ico
+*.idb
+*.ilk
+*.enc
+*.pch

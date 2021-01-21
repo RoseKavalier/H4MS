@@ -179,89 +179,205 @@ struct HookContext
 		return r;
 	}
 	// gives the return address from last call
-	_dword_ _retn()
+	_dword_ Retn()
 	{
 		return *(_dword_*)(ebp + 4);
 	}
-	// gives the return address from 2 calls ago
-	_dword_ _retn2()
-	{
-		return *(_dword_*)(*(_dword_*)(ebp)+4);
-	}
-	// gives the return address from 3 calls ago
-	_dword_ _retn3()
-	{
-		return *(_dword_*)(*(_dword_*)*(_dword_*)(ebp)+4);
-	}
-	// gives the nth argument used in the last call.
-	// Should be >= 1
-	_dword_ arg_n(int n)
-	{
-		return *(_dword_*)(ebp + 4 + 4 * n);
-	}
 
-	int& ref_arg_n(int n)
+	// gives the nth argument used in the last call as int reference
+	// use Arg<> if you wish to cast to something else
+	int& Arg(_dword_ n)
 	{
 		return *reinterpret_cast<int*>(ebp + 4 + 4 * n);
 	}
 
-	// gives the nth local variable value used
-	// Should be >= 1
-	_dword_ local_n(int n)
+	// gives the nth argument used in the last call as reference
+	// e.g. c->Arg<double>(3);
+	template<typename T>
+	T& Arg(_dword_ n)
 	{
-		return *(_dword_*)(ebp - 4 * n);
+		return *reinterpret_cast<T*>(ebp + 4 + 4 * n);
 	}
 
-	int& ref_local_n(int n)
+	// gives the nth local variable value used
+	// Should be >= 1
+	// use Local<> if you wish to cast to something else
+	int& Local(_dword_ n)
 	{
 		return *reinterpret_cast<int*>(ebp - 4 * n);
 	}
 
+	// gives nth local variable as reference
+	// e.g. c->local<H3Vector<H3String>>(20);
+	template<typename T>
+	T& Local(_dword_ n)
+	{
+		return *reinterpret_cast<T*>(ebp - 4 * n);
+	}
+
 	// gives the nth local variable address
 	// Should be >= 1
-	_ptr_ local_stack(int n)
+	_ptr_ LocalStack(_dword_ n)
 	{
 		return (ebp - 4 * n);
 	}
 
-	_byte_ AL()
+	// gives the nth local variable
+	// casted to specified type as **pointer**
+	// Should be >= 1
+	template<typename T>
+	T* LocalStack(_dword_ n)
 	{
-		return (_byte_)eax;
+		return reinterpret_cast<T*>(ebp - 4 * n);
 	}
 
-	_byte_& ref_al()
+	_byte_& AL()
 	{
 		return *reinterpret_cast<_byte_*>(&eax);
 	}
-
-	_byte_ CL()
+	_byte_& AH()
 	{
-		return (_byte_)ecx;
+		return reinterpret_cast<_byte_*>(&eax)[1];
+	}
+	_word_& AX()
+	{
+		return *reinterpret_cast<_word_*>(&eax);
 	}
 
-	_byte_& ref_cl()
+	_byte_& CL()
 	{
 		return *reinterpret_cast<_byte_*>(&ecx);
 	}
-
-	_byte_ DL()
+	_byte_& CH()
 	{
-		return (_byte_)edx;
+		return reinterpret_cast<_byte_*>(&ecx)[1];
+	}
+	_word_& CX()
+	{
+		return *reinterpret_cast<_word_*>(&ecx);
 	}
 
-	_byte_& ref_dl()
+	_byte_& DL()
 	{
 		return *reinterpret_cast<_byte_*>(&edx);
 	}
-
-	_byte_ BL()
+	_byte_& DH()
 	{
-		return (_byte_)ebx;
+		return reinterpret_cast<_byte_*>(&edx)[1];
+	}
+	_word_& DX()
+	{
+		return *reinterpret_cast<_word_*>(&edx);
 	}
 
-	_byte_& ref_bl()
+	_byte_& BL()
 	{
 		return *reinterpret_cast<_byte_*>(&ebx);
+	}
+	_byte_& BH()
+	{
+		return reinterpret_cast<_byte_*>(&ebx)[1];
+	}
+	_word_& BX()
+	{
+		return *reinterpret_cast<_word_*>(&ebx);
+	}
+
+	_word_& BP()
+	{
+		return *reinterpret_cast<_word_*>(&ebp);
+	}
+
+	_word_& SI()
+	{
+		return *reinterpret_cast<_word_*>(&esi);
+	}
+
+	_word_& DI()
+	{
+		return *reinterpret_cast<_word_*>(&edi);
+	}
+
+	template<typename T>
+	T& Eax()
+	{
+		return *reinterpret_cast<T*>(&eax);
+	}
+	template<typename T>
+	T& Ebx()
+	{
+		return *reinterpret_cast<T*>(&ebx);
+	}
+	template<typename T>
+	T& Ecx()
+	{
+		return *reinterpret_cast<T*>(&ecx);
+	}
+	template<typename T>
+	T& Edx()
+	{
+		return *reinterpret_cast<T*>(&edx);
+	}
+	template<typename T>
+	T& Edi()
+	{
+		return *reinterpret_cast<T*>(&edi);
+	}
+	template<typename T>
+	T& Esi()
+	{
+		return *reinterpret_cast<T*>(&esi);
+	}
+	template<typename T>
+	T& Esp()
+	{
+		return *reinterpret_cast<T*>(&esp);
+	}
+	template<typename T>
+	T& Ebp()
+	{
+		return *reinterpret_cast<T*>(&ebp);
+	}
+
+	template<typename T>
+	void Eax(const T& data)
+	{
+		eax = int(data);
+	}
+	template<typename T>
+	void Ebx(const T& data)
+	{
+		ebx = int(data);
+	}
+	template<typename T>
+	void Ecx(const T& data)
+	{
+		ecx = int(data);
+	}
+	template<typename T>
+	void Edx(const T& data)
+	{
+		edx = int(data);
+	}
+	template<typename T>
+	void Esi(const T& data)
+	{
+		esi = int(data);
+	}
+	template<typename T>
+	void Edi(const T& data)
+	{
+		edi = int(data);
+	}
+	template<typename T>
+	void Esp(const T& data)
+	{
+		esp = int(data);
+	}
+	template<typename T>
+	void Ebp(const T& data)
+	{
+		ebp = int(data);
 	}
 };
 
@@ -356,6 +472,11 @@ public:
 	// returns NULL if this patch is applied last
 	virtual Patch* __stdcall GetAppliedAfter() = 0;
 
+	// returns applied address of patch
+	_ptr_ operator&()
+	{
+		return GetAddress();
+	}
 };
 
 
@@ -368,6 +489,7 @@ class LoHook : public Patch
 
 
 typedef int(__stdcall *_LoHookFunc_)(LoHook*, HookContext*);
+typedef int(__stdcall* _LoHookReferenceFunc_)(LoHook&, HookContext&);
 
 // values ​​passed as the hooktype argument in PatcherInstance :: WriteHiHook and PatcherInstance :: CreateHiHook
 #define CALL_ 0
@@ -418,6 +540,11 @@ public:
 	// returns the value of the user hook data
 	// if not specified by the user, then 0
 	virtual _dword_ __stdcall GetUserData() = 0;
+
+	_ptr_ operator()()
+	{
+		return GetDefaultFunc();
+	}
 };
 
 
@@ -448,6 +575,17 @@ public:
 	// (creates and applies DATA_ patch)
 	// Returns the pointer to the patch
 	virtual Patch* __stdcall WriteDword(_ptr_ address, int value) = 0;
+
+	//////////////////////////////////////////////////////////////////////////////////////////
+	// WriteAddress shortcut
+	// writes a pointer of data type (its address)
+	// to the specified location
+	// The data type can be anything
+	template<typename T>
+	Patch* __stdcall WriteAddressOf(_ptr_ whereTo, const T& data)
+	{
+		return WriteDword(whereTo, reinterpret_cast<int>(&data));
+	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 	// WriteJmp method
@@ -497,6 +635,11 @@ public:
 	// using c-> esp and c-> Push, is limited to 128 bytes.
 	// if you need another restriction, use the WriteLoHookEx or CreateLoHookEx method.
 	virtual LoHook* __stdcall WriteLoHook(_ptr_ address, _LoHookFunc_ func) = 0;
+
+	LoHook* WriteLoHook(_ptr_ address, _LoHookReferenceFunc_ func)
+	{
+		return WriteLoHook(address, _LoHookFunc_(func));
+	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Method WriteHiHook
@@ -562,9 +705,10 @@ public:
 	// @@@subtype@@@
 	// defaulted to EXTENDED_
 	// if you wish to use another subtype, use regular virtual function
-	HiHook* WriteHiHook(_ptr_ address, int hooktype, int calltype, void* new_func)
+	template<typename T>
+	HiHook* WriteHiHook(_ptr_ address, int hooktype, int calltype, T new_func)
 	{
-		return WriteHiHook(address, hooktype, EXTENDED_, calltype, new_func);
+		return WriteHiHook(address, hooktype, EXTENDED_, calltype, reinterpret_cast<void*>(new_func));
 	}
 	// @@@calltype@@@
 	// STDCALL_ for __stdcall
@@ -593,7 +737,7 @@ public:
 	virtual Patch* __stdcall CreateJmpPatch(_ptr_ address, _ptr_ to) = 0;
 	virtual Patch* __stdcall CreateHexPatch(_ptr_ address, char* hex_str) = 0;
 	virtual Patch* __stdcall CreateCodePatchVA(_ptr_ address, char* format, _dword_* va_args) = 0;
-	virtual LoHook* __stdcall CreateLoHook(_ptr_ address, void* func) = 0;
+	virtual LoHook* __stdcall CreateLoHook(_ptr_ address, _LoHookFunc_ func) = 0;
 	virtual HiHook* __stdcall CreateHiHook(_ptr_ address, int hooktype, int subtype, int calltype, void* new_func) = 0;
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -621,10 +765,10 @@ public:
 
 	// in the original form, the method is not supposed to be used,
 	// see (below) the description of the wrapper method WriteDataPatch
-	virtual Patch* __stdcall WriteDataPatchVA(_ptr_ address, char* format, _dword_* va_args);
+	virtual Patch* __stdcall WriteDataPatchVA(_ptr_ address, char* format, _dword_* va_args) = 0;
 	// in the original form, the method is not supposed to be used,
 	// see (below) the description of the wrapper method WriteDataPatch
-	virtual Patch* __stdcall CreateDataPatchVA(_ptr_ address, char* format, _dword_* va_args);
+	virtual Patch* __stdcall CreateDataPatchVA(_ptr_ address, char* format, _dword_* va_args) = 0;
 
 
 	// GetLastPatchAt method
@@ -901,7 +1045,7 @@ public:
 
 	inline Patch* __stdcall WriteDword(_ptr_ address, const char* value)
 	{
-		return WriteDword(address, (int)value);
+		return WriteDword(address, int(value));
 	}
 
 };
@@ -943,13 +1087,13 @@ public:
 	// otherwise returns the last applied patch / hook in the neighborhood of address
 	// consistently walk through all the patches in a given neighborhood
 	// using this method and Patch :: GetAppliedBefore
-	virtual Patch* __stdcall GetLastPatchAt(_ptr_ address);
+	virtual Patch* __stdcall GetLastPatchAt(_ptr_ address) = 0;
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// UndoAllAt Method
 	// cancels all patches / hooks in the neighborhood of address
 	// always returns 1 (for compatibility with earlier versions of the library)
-	virtual Patch* __stdcall UndoAllAt(_ptr_ address);
+	virtual Patch* __stdcall UndoAllAt(_ptr_ address) = 0;
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	// SaveDump Method
@@ -1008,7 +1152,7 @@ public:
 	// otherwise returns the first applied patch / hook in the neighborhood of address
 	// consistently walk through all the patches in a given neighborhood
 	// using this method and Patch :: GetAppliedAfter
-	virtual Patch* __stdcall GetFirstPatchAt(_ptr_ address);
+	virtual Patch* __stdcall GetFirstPatchAt(_ptr_ address) = 0;
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 	// method MemCopyCodeEx
@@ -1068,12 +1212,12 @@ public:
 	template<typename ValueType>
 	inline ValueType& VarValue(const char* name)
 	{
-		if (sizeof(ValueType) > 4) __asm{__asm int 3};
+		if (sizeof(ValueType) > 4) __asm {__asm int 3};
 
 		Variable* v = VarFind(name);
 		if (v == NULL) v = VarInit(name, 0);
 
-		if (v == NULL) __asm{__asm int 3};
+		if (v == NULL) __asm {__asm int 3};
 
 		return (ValueType&)*v->GetPValue();
 	}
@@ -1129,10 +1273,12 @@ public:
 #pragma pack(pop)
 
 #define NOMINMAX
-#include <windows.h>
-#undef NOMINMAX
+#include <Windows.h>
 
-#define CALL_0(return_type, func_type, address) ((return_type(func_type *)(void))address)()
+#undef NOMINMAX
+#ifdef VOID
+#undef VOID
+#endif
 
 //////////////////////////////////////////////////////////////////
 // function GetPatcher
@@ -1143,23 +1289,32 @@ public:
 // function is called 1 time, which is obvious from its definition
 inline Patcher* GetPatcher()
 {
-	static int calls_count = 0;
+	typedef Patcher*(__stdcall* GetPatcher_t)();
+
+	/*static int calls_count = 0;
 	if (calls_count > 0)
 		return NULL;
-	calls_count++;
+	calls_count++;*/
 	HMODULE pl = LoadLibraryA("patcher_x86.dll");
 	if (pl)
 	{
-		FARPROC f = GetProcAddress(pl, "_GetPatcherX86@0");
+		GetPatcher_t f = GetPatcher_t(GetProcAddress(pl, "_GetPatcherX86@0"));
 		if (f)
-			return CALL_0(Patcher*, __stdcall, f);
+			return f();
 	}
 	return NULL;
 }
 
 #ifndef _LHF_
 // * predefined macro for LoHook functions
-// * LoHook *h and HookContext *c are pre-defined
+// * LoHook* h and HookContext* c are pre-defined
 // * e.g. _LHF_(MyFunction) {}
 #define _LHF_(func) int __stdcall func(LoHook *h, HookContext *c)
+#endif
+
+#ifndef _LHREF_
+// * predefined macro for LoHook functions
+// * LoHook* h and HookContext& c are pre-defined
+// * e.g. _LHREF_(MyFunction) {}
+#define _LHREF_(func) int __stdcall func(LoHook* h, HookContext& c)
 #endif

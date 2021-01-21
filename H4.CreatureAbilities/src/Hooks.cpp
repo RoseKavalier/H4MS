@@ -13,7 +13,7 @@ using json = nlohmann::json;
 using IntVector = std::vector<int>;
 using namespace h4;
 
-constexpr LPCSTR ABILITIES_JSON = ".\\CreatureAbilities.json";
+constexpr LPCSTR ABILITIES_JSON = "CreatureAbilities.json";
 constexpr INT CREATURE_NUMBER = 74;
 constexpr INT ABILITIES_NUMBER = 86;
 
@@ -207,9 +207,9 @@ struct CaseInsensitiveComparator
 	}
 };
 
-BOOL ReadJson()
+BOOL ReadJson(const std::string& p)
 {
-	std::ifstream in(ABILITIES_JSON);
+	std::ifstream in(p.c_str());
 
 	if (!in.is_open())
 	{
@@ -299,6 +299,6 @@ BOOL ReadJson()
 
 void hooks_init(PatcherInstance * pi)
 {
-	if (ReadJson())
+	if (ReadJson(ABILITIES_JSON))
 		pi->WriteByte(0xA477F8, 5); // Skip call 0x654820 @ 0x654800
 }

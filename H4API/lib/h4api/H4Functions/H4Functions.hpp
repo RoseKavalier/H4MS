@@ -17,7 +17,36 @@
 
 namespace h4
 {
-	
+	 /**
+	  * @brief Loads the specified *.h4r file
+	  *
+	  * @param name File to load, relative to current directory
+	  * @return Whether the specified resource was added.
+	  */
+	_H4API_ BOOL8 LoadResourceFile(LPCSTR name);
+	/**
+	 * @brief Loads all *.h4d files from the specified directory
+	 *
+	 * @param directory Folder to load files from, relative to current directory
+	 */
+	_H4API_ VOID  LoadResourcesFromDirectory(LPCSTR directory);
+}
+
+namespace h4e
+{
+	/**
+	  * @brief Loads the specified *.h4r file
+	  *
+	  * @param name File to load, relative to current directory
+	  * @return Whether the specified resource was added.
+	  */
+	_H4API_ BOOL8 LoadResourceFile(LPCSTR name);
+	/**
+	 * @brief Loads all *.h4d files from the specified directory
+	 *
+	 * @param directory Folder to load files from, relative to current directory
+	 */
+	_H4API_ VOID  LoadResourcesFromDirectory(LPCSTR directory);
 }
 
 #endif /* #define _H4FUNCTIONS_HPP_ */

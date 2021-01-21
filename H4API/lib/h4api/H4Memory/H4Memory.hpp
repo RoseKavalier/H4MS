@@ -22,8 +22,8 @@ namespace h4
 	{
 		UINT32 m_address;
 		UINT32 m_size;
-		DWORD m_old_protect;
-		BOOL m_protect_edited;
+		DWORD  m_oldProtect;
+		BOOL   m_protectEdited;
 	public:
 		_H4API_ H4Protect(UINT32 address, UINT32 size);
 		_H4API_ ~H4Protect();
@@ -35,117 +35,200 @@ namespace h4
 	{
 		enum mnemonics
 		{
-			inc_eax = 0x40,
-			inc_ecx = 0x41,
-			inc_edx = 0x42,
-			inc_ebx = 0x43,
-			inc_esp = 0x44,
-			inc_ebp = 0x45,
-			inc_esi = 0x46,
-			inc_edi = 0x47,
-			dec_eax = 0x48,
-			dec_ecx = 0x49,
-			dec_edx = 0x4A,
-			dec_ebx = 0x4B,
-			dec_esp = 0x4C,
-			dec_ebp = 0x4D,
-			dec_esi = 0x4E,
-			dec_edi = 0x4F,
-			push_eax = 0x50,
-			push_ecx = 0x51,
-			push_edx = 0x52,
-			push_ebx = 0x53,
-			push_esp = 0x54,
-			push_ebp = 0x55,
-			push_esi = 0x56,
-			push_edi = 0x57,
-			pop_eax = 0x58,
-			pop_ecx = 0x59,
-			pop_edx = 0x5A,
-			pop_ebx = 0x5B,
-			pop_esp = 0x5C,
-			pop_ebp = 0x5D,
-			pop_esi = 0x5E,
-			pop_edi = 0x5F,
-			pushad = 0x60,
-			popad = 0x61,
-			push_dword = 0x68,
-			push_byte = 0x6A,
-			short_jo = 0x70,
-			short_jno = 0x71,
-			short_jb = 0x72,
-			short_jnb = 0x73,
-			short_jz = 0x74,
-			short_jnz = 0x75,
-			short_jna = 0x76,
-			short_ja = 0x77,
-			short_js = 0x78,
-			short_jns = 0x79,
-			short_jp = 0x7A,
-			short_jnp = 0x7B,
-			short_jl = 0x7C,
-			short_jge = 0x7D, // jnl
-			short_jng = 0x7E,
-			short_jg = 0x7F,
-			nop = 0x90,
-			pushfd = 0x9C,
-			popfd = 0x9D,
-			call = 0xE8,
-			jmp = 0xE9,
-			short_jmp = 0xEB,
-			_retn_ = 0xC3,
-			_retnX_ = 0xC2,
+			INC_EAX    = 0x40,
+			INC_ECX    = 0x41,
+			INC_EDX    = 0x42,
+			INC_EBX    = 0x43,
+			INC_ESP    = 0x44,
+			INC_EBP    = 0x45,
+			INC_ESI    = 0x46,
+			INC_EDI    = 0x47,
+			DEC_EAX    = 0x48,
+			DEC_ECX    = 0x49,
+			DEC_EDX    = 0x4A,
+			DEC_EBX    = 0x4B,
+			DEC_ESP    = 0x4C,
+			DEC_EBP    = 0x4D,
+			DEC_ESI    = 0x4E,
+			DEC_EDI    = 0x4F,
+			PUSH_EAX   = 0x50,
+			PUSH_ECX   = 0x51,
+			PUSH_EDX   = 0x52,
+			PUSH_EBX   = 0x53,
+			PUSH_ESP   = 0x54,
+			PUSH_EBP   = 0x55,
+			PUSH_ESI   = 0x56,
+			PUSH_EDI   = 0x57,
+			POP_EAX    = 0x58,
+			POP_ECX    = 0x59,
+			POP_EDX    = 0x5A,
+			POP_EBX    = 0x5B,
+			POP_ESP    = 0x5C,
+			POP_EBP    = 0x5D,
+			POP_ESI    = 0x5E,
+			POP_EDI    = 0x5F,
+			PUSHAD     = 0x60,
+			POPAD      = 0x61,
+			PUSH_DWORD = 0x68,
+			PUSH_BYTE  = 0x6A,
+			SHORT_JO   = 0x70,
+			SHORT_JNO  = 0x71,
+			SHORT_JB   = 0x72,
+			SHORT_JNB  = 0x73,
+			SHORT_JZ   = 0x74,
+			SHORT_JNZ  = 0x75,
+			SHORT_JNA  = 0x76,
+			SHORT_JA   = 0x77,
+			SHORT_JS   = 0x78,
+			SHORT_JNS  = 0x79,
+			SHORT_JP   = 0x7A,
+			SHORT_JNP  = 0x7B,
+			SHORT_JL   = 0x7C,
+			SHORT_JGE  = 0x7D, // JNL
+			SHORT_JNG  = 0x7E,
+			SHORT_JG   = 0x7F,
+			NOP        = 0x90,
+			PUSHFD     = 0x9C,
+			POPFD      = 0x9D,
+			CALL       = 0xE8,
+			JMP        = 0xE9,
+			SHORT_JMP  = 0xEB,
+			_RETN_     = 0xC3,
+			_RETNX_    = 0xC2,
 
-			far_jo = 0x0F80,
-			far_jno = 0x0F81,
-			far_jb = 0x0F82,
-			far_jnb = 0x0F83,
-			far_jz = 0x0F84,
-			far_jnz = 0x0F85,
-			far_jna = 0x0F86,
-			far_ja = 0x0F87,
-			far_js = 0x0F88,
-			far_jns = 0x0F89,
-			far_jp = 0x0F8A,
-			far_jnp = 0x0F8B,
-			far_jl = 0x0F8C,
-			far_jnl = 0x0F8D,
-			far_jng = 0x0F8E,
-			far_jg = 0x0F8F,
-			call_dword = 0x15FF
+			FAR_JO     = 0x0F80,
+			FAR_JNO    = 0x0F81,
+			FAR_JB     = 0x0F82,
+			FAR_JNB    = 0x0F83,
+			FAR_JZ     = 0x0F84,
+			FAR_JNZ    = 0x0F85,
+			FAR_JNA    = 0x0F86,
+			FAR_JA     = 0x0F87,
+			FAR_JS     = 0x0F88,
+			FAR_JNS    = 0x0F89,
+			FAR_JP     = 0x0F8A,
+			FAR_JNP    = 0x0F8B,
+			FAR_JL     = 0x0F8C,
+			FAR_JNL    = 0x0F8D,
+			FAR_JNG    = 0x0F8E,
+			FAR_JG     = 0x0F8F,
+			CALL_DWORD = 0x15FF,
 		};
 
+		/**
+		 * @brief finds the first byte sequence in a specified region
+		 *
+		 * @param haystack region in which to look for
+		 * @param hlen the length of the memory region to search
+		 * @param needle byte sequence to search for
+		 * @param nlen how many bytes are in the needle
+		 * @return PUCHAR address that matches needle, as a pointer. nullptr if not found
+		 */
 		_H4API_ PUCHAR Memmem(PUCHAR haystack, size_t hlen, PUCHAR needle, size_t nlen);
+		/**
+		 * @brief performs Memmem operation to find first byte sequence in a specified region
+		 *
+		 * @param address starting search point
+		 * @param max_search_length maximum bytes to search through
+		 * @param needle byte sequence to search for
+		 * @param needle_length how many bytes are in the needle
+		 * @param offset how many bytes to shift the found needle location by
+		 * @return UINT32 location in the region, matching the needle and shifted by \p offset. nullptr if not found
+		 */
 		_H4API_ UINT32 FindByNeedle(PUINT8 address, UINT32 max_search_length, PUINT8 needle, INT32 needle_length, INT32 offset);
 
-#ifndef _NAKED_FUNCTION_
-#define _NAKED_FUNCTION_ VOID __declspec(naked)
+#ifndef _H4API_NAKED_FUNCTION_
+#define _H4API_NAKED_FUNCTION_ VOID __declspec(naked)
 #endif
 
-		// * only works for opcode length 5, most basic hook there is
-		// * function should be of type _NAKED_FUNCTION_
-		// * you are also in charge of overwritten assembly
-		_H4API_ VOID NakedHook5(UINT32 start, VOID* function);
-
-		// * writes byte, word or dword
+		/**
+		 * @brief only works for opcode length 5, most basic hook there is.
+		 * you are also in charge of overwritten assembly
+		 * @param address where to place hook
+		 * @param function _H4API_NAKED_FUNCTION_ hook
+		 */
+		_H4API_ BOOL NakedHook5(UINT32 address, H4NakedFunction function);
+		/**
+		 * @brief same as NakedHook5, but replaces bytes after the first 5 by NOP instructions
+		 *
+		 * @param address where to place hook
+		 * @param function _H4API_NAKED_FUNCTION_ hook
+		 * @param total_bytes how many bytes should be overwritten, minimum 5
+		 */
+		_H4API_ BOOL NakedHook(UINT32 address, H4NakedFunction function, UINT32 total_bytes);
+		/**
+		 * @brief write data at specific location
+		 *
+		 * @tparam T byte, word or dword, float, double...
+		 * @param address where to write data
+		 * @param value data to write
+		 * @return Whether the data was successfully written
+		 */
 		template<typename T>
-		struct WriteValue
-		{
-			WriteValue(const UINT address, const T value);
-		};
-		// writes array of values of type T
-		template<typename T, size_t size>
-		struct WriteValues
-		{
-			WriteValues(const UINT address, const T(&value)[size]);
-		};
+		BOOL WriteValue(ADDRESS address, const T value);
 
-		typedef WriteValue<BYTE> BytePatch;
-		typedef WriteValue<WORD> WordPatch;
-		typedef WriteValue<DWORD> DwordPatch;
-		typedef WriteValue<FLOAT> FloatPatch;
+		/**
+		 * @brief write data at specific locations
+		 *
+		 * @tparam T byte, word or dword, float, double...
+		 * @tparam size how many locations will be written to
+		 * @param address where to write data
+		 * @param value data to write
+		 * @return Whether the data was successfully written
+		 */
+		template<typename T, size_t size>
+		BOOL WriteValues(const UINT address, const T(&value)[size]);
+
+		/**
+		 * @brief writes pointer of data type (its address)
+		 *
+		 * @tparam T any data type
+		 * @param address address to write to
+		 * @param data a global or constexpr array, double or other value to be written as a pointer
+		 * @return Whether the data was successfully written
+		 */
+		template<typename T>
+		BOOL AddressOfPatch(const UINT address, const T& data);
+		/**
+		 * @brief writes pointer of data type (its address) to multiple locations
+		 *
+		 * @tparam Address primitive numerical type (int, unsigned int...)
+		 * @tparam Type any data type
+		 * @tparam size number of items in \p address array
+		 * @param address addresses to write to
+		 * @param data a global or constexpr array, double or other value to be written as a pointer
+		 * @return H3Internal::enable_if<std::numeric_limits<Address>::is_integer && sizeof(Address) == 4>::type
+		 */
+		template<typename Address, typename Type, size_t size>
+		typename std::enable_if<std::numeric_limits<Address>::is_integer && sizeof(Address) == 4, BOOL>::type
+			AddressOfPatch(const Address(&address)[size], const Type& data);
+		/**
+		 * @brief writes data type to an object reference without having to dereference to obtain their address
+		 *
+		 * @tparam T type of the object
+		 * @param reference data member of the object
+		 * @param data replacement value
+		 */
+		template<typename T>
+		BOOL ObjectPatch(T& reference, T data);
+		/**
+		 * @brief writes an array of bytes to the specified location
+		 *
+		 * @tparam size how many bytes are to be written
+		 * @param address starting location to write patch
+		 * @param value an array of bytes representing a patch
+		 */
 		template<size_t size>
-		static VOID HexPatch(const UINT address, const BYTE(&value)[size]);
+		BOOL HexPatch(const UINT address, const BYTE(&value)[size]);
+
+		_H4API_ BOOL BytePatch(ADDRESS address, UINT8 value);
+		_H4API_ BOOL CharPatch(ADDRESS address, INT8 value);
+		_H4API_ BOOL WordPatch(ADDRESS address, UINT16 value);
+		_H4API_ BOOL ShortPatch(ADDRESS address, INT16 value);
+		_H4API_ BOOL DwordPatch(ADDRESS address, UINT32 value);
+		_H4API_ BOOL IntPatch(ADDRESS address, INT32 value);
+		_H4API_ BOOL FloatPatch(ADDRESS address, FLOAT value);
+		_H4API_ BOOL DoublePatch(ADDRESS address, DOUBLE value);
 	}
 }
 

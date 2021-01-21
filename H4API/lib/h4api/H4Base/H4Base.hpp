@@ -13,6 +13,7 @@
 #define _H4BASE_HPP_
 
 #include "../H4_Core.hpp"
+#include "../../H4Types.hpp"
 
 // * Prevents some warnings
 #define _CRT_SECURE_NO_WARNINGS
@@ -30,7 +31,7 @@
 #endif
 
 #ifdef max
-#undex max
+#undef max
 #endif
 
 // * use STL functions instead of C-style
@@ -76,21 +77,48 @@
 #endif
 #endif
 
+#ifdef _MSC_VER
+#ifndef _H4API_FORCEINLINE_
+/**
+ * @brief used to force function to be inline
+ */
+#define _H4API_FORCEINLINE_ __forceinline
+#endif
+#elif defined(__GNUC__)
+#ifndef _H4API_FORCEINLINE_
+ /**
+ * @brief used to force function to be inline
+ */
+#define _H4API_FORCEINLINE_ inline __attribute__((__always_inline__))
+#endif
+#elif defined(__CLANG__)
+#if __has_attribute(__always_inline__)
+#ifndef _H4API_FORCEINLINE_
+/**
+ * @brief used to force function to be inline
+ */
+#define _H4API_FORCEINLINE_ inline __attribute__((__always_inline__))
+#endif
+#else
+#ifndef _H4API_FORCEINLINE_
+/**
+ * @brief used to force function to be inline
+ */
+#define _H4API_FORCEINLINE_ inline
+#endif
+#endif
+#else
+#ifndef _H4API_FORCEINLINE_
+/**
+ * @brief used to force function to be inline
+ */
+#define _H4API_FORCEINLINE_ inline
+#endif
+#endif
+
 // * indicates this content will be deprecated
 // * and replaced by equivalent expressions
 #define _H4API_DEPRECATED_
-
-// * Slaps top of car
-// * This bad boy can hold just about anything
-typedef void(*naked_t)();
-// * generic typedef to indicate this is a h4 function
-typedef unsigned long h4func;
-// * 1-byte sized boolean
-typedef char          BOOL8;
-// * Used for unknown structure members
-typedef char          h4unk;
-// * Used for alignment structure members
-typedef char          h4align;
 
 // * for uniformity's sake
 #ifdef VOID
@@ -102,36 +130,6 @@ typedef void VOID;
 typedef void VOID;
 #endif
 
-// * typedef safety declarations
-// * no checks are needed here based on C++03 Standard 7.1.3 typedef specifier
-// * https://stackoverflow.com/questions/8594954/repeated-typedefs-invalid-in-c-but-valid-in-c?answertab=votes#tab-top
-typedef int              INT, *PINT;
-typedef unsigned int     UINT, *PUINT;
-typedef signed char      INT8, *PINT8;
-typedef signed short     INT16, *PINT16;
-typedef signed int       INT32, *PINT32;
-typedef signed __int64   INT64, *PINT64;
-typedef unsigned char    UINT8, *PUINT8;
-typedef unsigned short   UINT16, *PUINT16;
-typedef unsigned int     UINT32, *PUINT32;
-typedef unsigned __int64 UINT64, *PUINT64;
-typedef float            FLOAT;
-typedef FLOAT                    *PFLOAT;
-typedef double           DOUBLE;
-typedef DOUBLE                   *PDOUBLE;
-typedef char             CHAR;
-typedef CHAR                     *PCHAR;
-typedef unsigned char    UCHAR;
-typedef UCHAR                    *PUCHAR;
-typedef unsigned char    BYTE;
-typedef BYTE                     *PBYTE;
-typedef unsigned short   WORD;
-typedef WORD                     *PWORD;
-typedef unsigned long    DWORD;
-typedef DWORD                    *PDWORD;
-typedef const char               *LPCSTR;
-typedef void                     *PVOID;
-
 #ifndef ArraySize
 // * returns number of elements in an array
 #define ArraySize(arr) (sizeof(arr) / sizeof((arr)[0]))
@@ -141,50 +139,6 @@ typedef void                     *PVOID;
 // * returns absolute value of number
 #define Abs(num) (((num) >= 0) ? (num) : (-(num)))
 #endif
-
-#pragma region Access Macros
-#ifndef StrAt
-// * returns c-string at address
-#define StrAt(address) (*(LPCSTR*)(address))
-#endif
-#ifndef PtrAt
-// * returns unsigned int at address
-#define PtrAt(address) (*(UINT*)(address))
-#endif
-#ifndef DwordAt
-// * returns unsigned int at address
-#define DwordAt(address) (*(UINT*)(address))
-#endif
-#ifndef IntAt
-// * returns signed int at address
-#define IntAt(address) (*(INT32*)(address))
-#endif
-#ifndef WordAt
-// * returns unsigned short at address
-#define WordAt(address) (*(UINT16*)(address))
-#endif
-#ifndef ShortAt
-// * returns signed short at address
-#define ShortAt(address) (*(INT16*)(address))
-#endif
-#ifndef ByteAt
-// * returns unsigned char at address
-#define ByteAt(address) (*(UINT8*)(address))
-#endif
-#ifndef CharAt
-// * returns signed char at address
-#define CharAt(address) (*(INT8*)(address))
-#endif
-#ifndef FloatAt
-// * returns float at address
-#define FloatAt(address) (*(FLOAT*)(address))
-#endif
-#ifndef FuncAt
-// * returns address of function at call
-// * can also be used to return destination of JMP
-#define FuncAt(address) (DwordAt((address) + 1) + (address) + 5)
-#endif
-#pragma endregion
 
 // * model function definitions
 // * used to interact with game functions
@@ -472,23 +426,173 @@ namespace h4vargs
 
 namespace h4
 {
+	/**
+	 * @brief Get a reference of specific type at the specified address
+	 *
+	 * @tparam T Type of data to cast to.
+	 * @param address The location of the sought data.
+	 * @return A reference of the value at the specified location.
+	*/
+	template<typename T>
+	_H4API_FORCEINLINE_ T& ValueAt(ADDRESS address) { return *reinterpret_cast<T*>(address); }
+
+	/**
+	 * @brief Get a reference of const char* at the specified address.
+	 *
+	 * @param address The location of the sought data.
+	 * @return A reference of the string at the specified location.
+	 */
+	_H4API_FORCEINLINE_ LPCSTR& StrAt(ADDRESS address) { return ValueAt<LPCSTR>(address); }
+	/**
+	 * @brief Get a reference of pointer for any data.
+	 *
+	 * @tparam T Type of data of the data.
+	 * @param address The location of the sought data.
+	 * @return A reference of the pointer at the specified location.
+	 */
+	template<typename T>
+	_H4API_FORCEINLINE_ UINT32& PtrAt(T data) { return ValueAt<UINT32>(ADDRESS(data)); }
+	/**
+	 * @brief Get a reference of unsigned integer at the specified address.
+	 *
+	 * @param address The location of the sought data.
+	 * @return A reference of the unsigned integer at the specified location.
+	 */
+	_H4API_FORCEINLINE_ UINT32& DwordAt(ADDRESS address) { return ValueAt<UINT32>(address); }
+	/**
+	 * @brief Get a reference of signed integer at the specified address.
+	 *
+	 * @param address The location of the sought data.
+	 * @return A reference of the signed integer at the specified location.
+	 */
+	_H4API_FORCEINLINE_ INT32&  IntAt(ADDRESS address) { return ValueAt<INT32>(address); }
+	/**
+	 * @brief Get a reference of unsigned short at the specified address.
+	 *
+	 * @param address The location of the sought data.
+	 * @return A reference of the unsigned short at the specified location.
+	 */
+	_H4API_FORCEINLINE_ UINT16& WordAt(ADDRESS address) { return ValueAt<UINT16>(address); }
+	/**
+	 * @brief Get a reference of signed short at the specified address.
+	 *
+	 * @param address The location of the sought data.
+	 * @return A reference of the signed short at the specified location.
+	 */
+	_H4API_FORCEINLINE_ INT16&  ShortAt(ADDRESS address) { return ValueAt<INT16>(address); }
+	/**
+	 * @brief Get a reference of unsigned char at the specified address.
+	 *
+	 * @param address The location of the sought data.
+	 * @return A reference of the unsigned char at the specified location.
+	 */
+	_H4API_FORCEINLINE_ UINT8&  ByteAt(ADDRESS address) { return ValueAt<UINT8>(address); }
+	/**
+	 * @brief Get a reference of signed char at the specified address.
+	 *
+	 * @param address The location of the sought data.
+	 * @return A reference of the signed char at the specified location.
+	 */
+	_H4API_FORCEINLINE_ INT8&   CharAt(ADDRESS address) { return ValueAt<INT8>(address); }
+	/**
+	 * @brief Get a reference of float at the specified address.
+	 *
+	 * @param address The location of the sought data.
+	 * @return A reference of the float at the specified location.
+	 */
+	_H4API_FORCEINLINE_ FLOAT&  FloatAt(ADDRESS address) { return ValueAt<FLOAT>(address); }
+	/**
+	 * @brief Get a reference of double at the specified address.
+	 *
+	 * @param address The location of the sought data.
+	 * @return A reference of the double at the specified location.
+	 */
+	_H4API_FORCEINLINE_ DOUBLE& DoubleAt(ADDRESS address) { return ValueAt<DOUBLE>(address); }
+
+	/**
+	 * @brief Get the value of the function called (or jump destination) at the specified address.
+	 *
+	 * @param address The location of the call/JMP instruction.
+	 * @return The address of the destination.
+	 */
+	_H4API_FORCEINLINE_ h4func  FuncAt(ADDRESS address) { return ValueAt<h4func>(address + 1) + address + 5; }
+
+	/**
+	 * @brief Get the address of a specific object.
+	 *
+	 * @tparam T Type of the current object.
+	 * @param value The object itself.
+	 * @return The address of the provided object.
+	 */
+	template<typename T>
+	_H4API_FORCEINLINE_ ADDRESS AddressOf(const T& value) { return reinterpret_cast<ADDRESS>(&value); }
+
+	/**
+	 * @brief Used to get the hexadecimal value of a type T instead of getting a casted value.
+	 * Useful to convert a FLOAT to DWORD, e.g. 0.25f is returned as 0x3E800000h instead of 0h.
+	 *
+	 * @tparam T Type of data to convert
+	 * @param value Value of the data to convert.
+	 * @return Converted data as unsigned integer.
+	 */
+	template<typename T>
+	_H4API_FORCEINLINE_ UINT32 ValueAsDword(T value) { return DwordAt(AddressOf(value)); }
+
 	// * heapalloc using H3 assets
 	PVOID F_malloc(UINT size);
 	// * heapfree using H3 assets
 	VOID F_delete(PVOID obj);
 
+	class H4Version
+	{
+	public:
+		enum class GameVersion
+		{
+			UNKNOWN          = -1,
+			GAME             = 0,			
+			EDITOR           = 1,
+			UNPATCHED_GAME   = 2,
+			UNPATCHED_EDITOR = 3,
+		};
+	public:
+		/**
+		 * @brief the constructor is required to detect the exe type
+		 */
+		_H4API_ H4Version();
+		/**
+		 * @brief returns the detected exe version
+		 *
+		 * @return GameVersion a value matching the current exe
+		 */
+		_H4API_ GameVersion version() const;
+		/**
+		 * @brief returns the detected exe version
+		 *
+		 * @return true if the current exe is game
+		 */
+		_H4API_ BOOL8 game() const;
+		/**
+		 * @brief returns the detected exe version
+		 *
+		 * @return true if the current exe is editor
+		 */
+		_H4API_ BOOL8 editor() const;
+	private:
+		GameVersion m_version;
+	};
+
 	namespace H4Error
 	{
 		// * external messagebox showing message
-		VOID ShowError(LPCSTR message, LPCSTR title = "H4Error!");
+		_H4API_ VOID ShowError(LPCSTR message, LPCSTR title = "H4Error!");
 		// * external messagebox showing message and offering OK / Cancel choice
-		BOOL ShowErrorChoice(LPCSTR message, LPCSTR title = "H4Error!");
+		_H4API_ BOOL ShowErrorChoice(LPCSTR message, LPCSTR title = "H4Error!");
 		// * external messagebox showing message
 		// * wide char format
-		VOID _ShowError(LPCWSTR message, LPCWSTR title = L"H4Error!");
+		_H4API_ VOID _ShowError(LPCWSTR message, LPCWSTR title = L"H4Error!");
 		// * external messagebox showing message and offering OK / Cancel choice
 		// * wide char format
-		BOOL _ShowErrorChoice(LPCWSTR message, LPCWSTR title = L"H4Error!");
+		_H4API_ BOOL _ShowErrorChoice(LPCWSTR message, LPCWSTR title = L"H4Error!");
 	}
 
 	// * dword used as bitfield
@@ -500,14 +604,14 @@ namespace h4
 	public:
 		// * returns whether bit at position is set or not
 		// * position can exceed the scope of bitfield, meaning greater than 32 bits
-		BOOL GetState(INT32 position) const;
+		_H4API_ BOOL GetState(INT32 position) const;
 		// * sets bit at position to on or off
 		// * position can exceed the scope of bitfield, meaning greater than 32 bits
-		VOID SetState(INT32 position, BOOL state);
+		_H4API_ VOID SetState(INT32 position, BOOL state);
 		// * Sets bitfield to specified value
-		VOID Set(UINT32 value);
+		_H4API_ VOID Set(UINT32 value);
 		// * Gets bitfield value as 32bits
-		UINT Get() const;
+		_H4API_ UINT Get() const;
 	};
 } // namespace h4
 

@@ -66,6 +66,44 @@ namespace h4
 		return m_bf;
 	}
 
+	_H4API_ H4Version::H4Version() : m_version(GameVersion::UNKNOWN)
+	{
+		IMAGE_DOS_HEADER* pDOSHeader = reinterpret_cast<IMAGE_DOS_HEADER*>(0x400000);
+		IMAGE_NT_HEADERS* pNTHeaders = reinterpret_cast<IMAGE_NT_HEADERS*>((reinterpret_cast<BYTE*>(pDOSHeader) + pDOSHeader->e_lfanew));
+		DWORD entry = pNTHeaders->OptionalHeader.AddressOfEntryPoint;
+
+		switch (entry)
+		{
+		case 0x31D600:
+			m_version = GameVersion::EDITOR;
+			break;
+		case 0x56FEC0:
+			m_version = GameVersion::GAME;
+			break;
+		case 0x4E3981:
+			m_version = GameVersion::UNPATCHED_GAME;
+		case 0x262F66:
+			m_version = GameVersion::UNPATCHED_EDITOR;
+		default:
+			break;
+		}
+	}
+
+	_H4API_ H4Version::GameVersion H4Version::version() const
+	{
+		return m_version;
+	}
+
+	_H4API_ BOOL8 H4Version::game() const
+	{
+		return m_version == GameVersion::GAME;
+	}
+
+	_H4API_ BOOL8 H4Version::editor() const
+	{
+		return m_version == GameVersion::EDITOR;
+	}
+
 }
 
 

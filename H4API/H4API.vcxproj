@@ -94,7 +94,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>_H4API_LIBRARY_;_H4API_PATCHER_X86_;_H4API_OPERATORS_;_H4_STD_CONVERSIONS_;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_H4API_LIBRARY_;_H4API_PATCHER_X86_;_H4_STD_CONVERSIONS_;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
@@ -112,7 +112,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_H4API_LIBRARY_;_H4API_PATCHER_X86_;_H4API_OPERATORS_;_H4_STD_CONVERSIONS_;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_H4API_LIBRARY_;_H4API_PATCHER_X86_;_H4_STD_CONVERSIONS_;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
@@ -163,7 +163,6 @@
     <ClInclude Include="lib\h4api\H4Defines\H4Defines.hpp" />
     <ClInclude Include="lib\h4api\H4Functions\H4Functions.hpp" />
     <ClInclude Include="lib\h4api\H4Memory\H4Memory.hpp" />
-    <ClInclude Include="lib\h4api\H4Operators\H4Operators.hpp" />
     <ClInclude Include="lib\h4api\H4Structures\H4Structures.hpp" />
     <ClInclude Include="lib\h4api\H4Vector\H4Vector.hpp" />
     <ClInclude Include="lib\h4api\H4_Allocator.hpp" />
@@ -174,10 +173,11 @@
     <ClInclude Include="lib\h4api\H4_Exception.hpp" />
     <ClInclude Include="lib\h4api\H4_Functions.hpp" />
     <ClInclude Include="lib\h4api\H4_Memory.hpp" />
-    <ClInclude Include="lib\h4api\H4_Operators.hpp" />
     <ClInclude Include="lib\h4api\H4_Structures.hpp" />
     <ClInclude Include="lib\h4api\H4_Vector.hpp" />
+    <ClInclude Include="lib\H4Types.hpp" />
     <ClInclude Include="lib\patcher_x86.hpp" />
+    <ClInclude Include="lib\Plugin.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lib\h4api\H4Allocator\H4Allocator.cpp" />
@@ -185,9 +185,9 @@
     <ClCompile Include="lib\h4api\H4Defines\H4Defines.cpp" />
     <ClCompile Include="lib\h4api\H4Functions\H4Functions.cpp" />
     <ClCompile Include="lib\h4api\H4Memory\H4Memory.cpp" />
-    <ClCompile Include="lib\h4api\H4Operators\H4Operators.cpp" />
     <ClCompile Include="lib\h4api\H4Structures\H4Structures.cpp" />
     <ClCompile Include="lib\h4api\H4Vector\H4Vector.cpp" />
+    <ClCompile Include="lib\Plugin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="lib\h4api\H4Allocator\H4Allocator.inl" />
@@ -195,7 +195,6 @@
     <None Include="lib\h4api\H4Defines\H4Defines.inl" />
     <None Include="lib\h4api\H4Functions\H4Functions.inl" />
     <None Include="lib\h4api\H4Memory\H4Memory.inl" />
-    <None Include="lib\h4api\H4Operators\H4Operators.inl" />
     <None Include="lib\h4api\H4Structures\H4Structures.inl" />
     <None Include="lib\h4api\H4Vector\H4Vector.inl" />
   </ItemGroup>
