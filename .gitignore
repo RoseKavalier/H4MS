@@ -15,8 +15,6 @@
 *.user
 *.py
 *.dll
-H4MS/H4MS.vcxproj
-H4MS/H4MS.vcxproj.filters
 H4MS/include/targetver.h
 H4MS/Release/H4MS.pch
 *.zip

@@ -42,9 +42,6 @@
     <ClInclude Include="lib\h4api\H4_Memory.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lib\h4api\H4_Operators.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lib\h4api\H4Allocator\H4Allocator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -60,9 +57,6 @@
     <ClInclude Include="lib\h4api\H4Memory\H4Memory.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lib\h4api\H4Operators\H4Operators.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lib\h4api\H4Vector\H4Vector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -76,6 +70,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\h4api\H4Structures\H4Structures.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\Plugin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\H4Types.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -95,13 +95,13 @@
     <ClCompile Include="lib\h4api\H4Memory\H4Memory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lib\h4api\H4Operators\H4Operators.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="lib\h4api\H4Vector\H4Vector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lib\h4api\H4Structures\H4Structures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\Plugin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -119,9 +119,6 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="lib\h4api\H4Memory\H4Memory.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="lib\h4api\H4Operators\H4Operators.inl">
       <Filter>Header Files</Filter>
     </None>
     <None Include="lib\h4api\H4Vector\H4Vector.inl">
