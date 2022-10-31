@@ -82,6 +82,7 @@ namespace h4
 			break;
 		case 0x4E3981:
 			m_version = GameVersion::UNPATCHED_GAME;
+			break;
 		case 0x262F66:
 			m_version = GameVersion::UNPATCHED_EDITOR;
 		default:
@@ -96,12 +97,12 @@ namespace h4
 
 	_H4API_ BOOL8 H4Version::game() const
 	{
-		return m_version == GameVersion::GAME;
+		return m_version == GameVersion::GAME || m_version == GameVersion::UNPATCHED_GAME;
 	}
 
 	_H4API_ BOOL8 H4Version::editor() const
 	{
-		return m_version == GameVersion::EDITOR;
+		return m_version == GameVersion::EDITOR || m_version == GameVersion::UNPATCHED_EDITOR;
 	}
 
 }
