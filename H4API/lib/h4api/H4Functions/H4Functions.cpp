@@ -15,7 +15,7 @@ namespace h4
 {
 	_H4API_ BOOL8 LoadResourceFile(LPCSTR name)
 	{
-		return CDECL_1(BOOL8, 0x7FF070, name);
+		return CDECL_1(BOOL8, 0x7FF910, name);
 	}
 	_H4API_ VOID LoadResourcesFromDirectory(LPCSTR directory)
 	{
