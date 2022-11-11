@@ -75,16 +75,16 @@ namespace h4
 		switch (entry)
 		{
 		case 0x31D600:
-			m_version = GameVersion::EDITOR;
+			m_version = GameVersion::LEGACY_PATCHED_EDITOR;
 			break;
 		case 0x56FEC0:
-			m_version = GameVersion::GAME;
+			m_version = GameVersion::LEGACY_PATCHED_GAME;
 			break;
 		case 0x4E3981:
-			m_version = GameVersion::UNPATCHED_GAME;
+			m_version = GameVersion::GAME;
 			break;
 		case 0x262F66:
-			m_version = GameVersion::UNPATCHED_EDITOR;
+			m_version = GameVersion::EDITOR;
 		default:
 			break;
 		}
@@ -97,12 +97,12 @@ namespace h4
 
 	_H4API_ BOOL8 H4Version::game() const
 	{
-		return m_version == GameVersion::GAME || m_version == GameVersion::UNPATCHED_GAME;
+		return m_version == GameVersion::LEGACY_PATCHED_GAME || m_version == GameVersion::GAME;
 	}
 
 	_H4API_ BOOL8 H4Version::editor() const
 	{
-		return m_version == GameVersion::EDITOR || m_version == GameVersion::UNPATCHED_EDITOR;
+		return m_version == GameVersion::LEGACY_PATCHED_EDITOR || m_version == GameVersion::EDITOR;
 	}
 
 }

@@ -548,11 +548,11 @@ namespace h4
 	public:
 		enum class GameVersion
 		{
-			UNKNOWN          = -1,
-			GAME             = 0,			
-			EDITOR           = 1,
-			UNPATCHED_GAME   = 2,
-			UNPATCHED_EDITOR = 3,
+			UNKNOWN							= -1,
+			LEGACY_PATCHED_GAME             =  0,			
+			LEGACY_PATCHED_EDITOR           =  1,
+			GAME							=  2,
+			EDITOR							=  3,
 		};
 	public:
 		/**
