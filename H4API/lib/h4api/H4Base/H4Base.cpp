@@ -77,7 +77,7 @@ namespace h4
 		case 0x31D600:
 			m_version = GameVersion::LEGACY_PATCHED_EDITOR;
 			break;
-		case 0x56FEC0:
+		case 0x56FECB:
 			m_version = GameVersion::LEGACY_PATCHED_GAME;
 			break;
 		case 0x4E3981:
